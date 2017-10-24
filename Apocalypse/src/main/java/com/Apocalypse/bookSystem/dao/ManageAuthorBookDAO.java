@@ -1,5 +1,4 @@
 package com.Apocalypse.bookSystem.dao;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,7 +34,6 @@ public class ManageAuthorBookDAO {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	
 	public List<BookBean> findBooksByAuthorId(int author_Id) throws SQLException{
@@ -75,6 +73,7 @@ public class ManageAuthorBookDAO {
 		}
 	}
 	
+	
 	public List<BookBean> findCheckBooksByAuthorId(int author_Id) throws SQLException{
 		String sql =" SELECT b.book_Id, b.title, b.author_Id, b.book_state, b.publish_Date,"+
 			    	" b.intro, b.classify, b.clicks, b.tickets, b.surface_Plot, b.surface_Plot_Name, "+
@@ -111,10 +110,6 @@ public class ManageAuthorBookDAO {
 			return bbs;
 		}
 	}
-	
-	
-	
-	
 	
 	
 	public String findPenNameByAuthorId(int author_Id) throws SQLException{
@@ -169,17 +164,12 @@ public class ManageAuthorBookDAO {
 	}
 	
 	
-	
-	
-	
-	
-	
 	public int insertBookAsAuthor(BookBean bb) throws SQLException, IOException{
 		String sql = "INSERT INTO "+
 		        "check_book(title,author_Id,book_state,publish_Date,intro,classify,surface_Plot,surface_Plot_Name)"+
 			    "VALUES(?,?,?,?,?,?,?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-	    File file1 = new File("D:/_JSP/workspace/Booksystem/src/main/webapp/fakedata_resources/"+bb.getSurface_Plot_Name()+".jpg");	    
+	    File file1 = new File("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/fakedata_resources/"+bb.getSurface_Plot_Name()+".jpg");	    
 	    int length1 = (int) file1.length();
 	    InputStream fin1 = new FileInputStream(file1);
 	    
@@ -253,7 +243,6 @@ public class ManageAuthorBookDAO {
 	}
 	
 	
-	
 	public int findMaxChapterNumber(int book_Id,int max_VolumeNumber) throws SQLException{
 		String sql =" SELECT MAX(chapter_Id) "+
 			    	" FROM chapter "+
@@ -275,8 +264,6 @@ public class ManageAuthorBookDAO {
 			return max_ChapterNumber;
 		}
 	}
-	
-	
 	
 	
 	public String findChapterTitle(int book_Id, int max_VolumeNumber,int max_ChapterNumber) throws SQLException{
@@ -303,10 +290,6 @@ public class ManageAuthorBookDAO {
 	}
 	
 	
-	
-	
-	
-	
 	public int insertVolumeAsAuthor(VolumeBean vbUp) throws SQLException, IOException{
 		String sql = "INSERT INTO "+
 		        "check_volume(book_Id,volume_Id,volume_Title) "+
@@ -326,6 +309,7 @@ public class ManageAuthorBookDAO {
 			return -1;
 		}			
 	}
+	
 	
 	public int insertChapterAsAuthor(ChapterBean cbUp) throws SQLException, IOException{
 		String sql = "INSERT INTO "+
@@ -352,13 +336,12 @@ public class ManageAuthorBookDAO {
 	}
 	
 	
-	
 	public int alterBookAsAuthor(BookBean bb) throws SQLException, IOException{
 		String sql = "INSERT INTO "+
 		        "edit_book(book_Id,title,author_Id,intro,classify,surface_Plot,surface_Plot_Name)"+
 			    "VALUES(?,?,?,?,?,?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-	    File file1 = new File("D:/_JSP/workspace/Booksystem/src/main/webapp/edit_bookcover_resources/"+bb.getSurface_Plot_Name()+".jpg");	    
+	    File file1 = new File("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/edit_bookcover_resources/"+bb.getSurface_Plot_Name()+".jpg");	    
 	    int length1 = (int) file1.length();
 	    InputStream fin1 = new FileInputStream(file1);
 	    
@@ -380,20 +363,85 @@ public class ManageAuthorBookDAO {
 			return 1;
 		}else {
 			return -1;
+		}		
+	}
+	
+
+	public String findChapterContent(int book_Id, int volume_Id,int chapter_Id) throws SQLException{
+		String sql =" SELECT chapter_content "+
+			    	" FROM chapter "+
+			    	" WHERE book_Id = ?  AND volume_Id = ? AND chapter_Id = ? ";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,book_Id);
+		pstmt.setInt(2,volume_Id);
+		pstmt.setInt(3,chapter_Id);
+		ResultSet rs = pstmt.executeQuery();
+		String chapter_Content = null;
+		if(rs.next()) {
+			chapter_Content = rs.getString("chapter_content");
 		}
-				
+		rs.close();
+		pstmt.close();
+		
+		if(chapter_Content.equals(null)) { 
+			return null;
+		}else {
+			return chapter_Content;
+		}
+	}
+	
+
+	public int alterVolumeAsAuthor(VolumeBean vb) throws SQLException, IOException{
+		String sql = "INSERT INTO "+
+		        "edit_volume(book_Id,volume_Id,volume_Title) "+
+			    "VALUES(?,?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+    
+	    pstmt.setInt(1,vb.getBookId());       
+        pstmt.setInt(2,vb.getVolumeId());        
+		pstmt.setString(3,vb.getVolumeTitle());
+		
+        int result = pstmt.executeUpdate();
+        pstmt.clearParameters();
+        pstmt.close();
+        
+        System.out.println(result);
+
+		if(result == 1) { 
+			return 1;
+		}else {
+			return -1;
+		}		
 	}
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
+	public int alterChapterAsAuthor(ChapterBean cb) throws SQLException, IOException{
+		String sql = "INSERT INTO "+
+		        "edit_chapter(book_Id,volume_Id,chapter_id,chapter_Title,chapter_content) "+
+			    "VALUES(?,?,?,?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+
+	    pstmt.setInt(1,cb.getBookId());       
+        pstmt.setInt(2,cb.getVolumeId());  
+        pstmt.setInt(3,cb.getChapterId());
+		pstmt.setString(4,cb.getChapterTitle());
+		pstmt.setString(5,cb.getChapterContent());
+		
+        int result = pstmt.executeUpdate();
+        pstmt.clearParameters();
+        pstmt.close();
+        
+        System.out.println(result);
+
+		if(result == 1) { 
+			return 1;
+		}else {
+			return -1;
+		}		
+	}
 	
 	
 	

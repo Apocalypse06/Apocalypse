@@ -73,11 +73,6 @@
 					</div>
 					
 					
-					
-					
-					
-					
-					
 					<div id="op_tab4">
 						<form id="EditContent_chooseBook_form">
 							<input id="EditContent_author_id" type="hidden" name="author_id" value="${authorId}">
@@ -94,26 +89,9 @@
 					</div>
 					
 					
-					
-					
-					
 					<div id="op_tab5"></div>
 				</div>
 		</div>	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 		<div id="dispTxt_zone">
@@ -128,7 +106,7 @@
 					</c:if>
 					
 					
-					<textarea  id="dispTxt_contents_pad" style="overflow-x:hidden;overflow-y:auto;">${messageOut}</textarea>
+					<textarea  id="dispTxt_contents_pad" disabled="disabled" style="overflow-x:hidden;overflow-y:auto;">${messageOut}</textarea>
 				</div>
 		</div>
 

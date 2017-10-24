@@ -1,6 +1,5 @@
 $(function(){
 
-
 	
 	$('#operate_contents div[id != "op_tab1"]').hide();
 	$('#operate_tabs li a').click(function(){
@@ -13,7 +12,6 @@ $(function(){
 	});
 
 	
-
 	$('#dispTable_contents div[id != "dt_tab1"]').hide();
 	$('#dt_tab1').show();
 	$('#dt_tab1 div').show();
@@ -27,9 +25,7 @@ $(function(){
 		return false;
 	});
 
-	
-
-	
+		
 	$('#NewChapter_chooseBookId').change(function(){		
 		if($('#NewChapter_chooseBookId').val() != 'none'){
 //			alert("!!!");
@@ -75,7 +71,7 @@ $(function(){
 							state_info = "<h3>"+"目前該作品連載至:<h3><br>"
 						    			+"第"+volume_number+"卷"+" "+volume_title +" -- "
 						    			+"第"+chapter_number+"章"+" "+chapter_title+"<br>";
-							var select_form_01 = '<form  action="ManageAuthorService.do" method="POST" >'
+							var select_form_01 = '<form  action="ManageAuthorService.do" method="POST">'
 												+'<input type="hidden" name="function_type" value="upload_newvolume_mid">'
 												+'<input type="hidden" name="author_id" value="'+author_id+'">'
 												+'<input type="hidden" name="book_id" value="'+book_id+'">'
@@ -108,11 +104,6 @@ $(function(){
 	});	
 	
 
-	
-	
-	
-	
-	
 	$('#EditContent_chooseBookId').change(function(){		
 		if($('#EditContent_chooseBookId').val() != 'none'){
 //			alert("!!!");
@@ -149,7 +140,10 @@ $(function(){
 							alter_state_info = "<h3>"+"目前該作品連載至:<h3><br>"
 						    			+"第"+volume_number+"卷"+" "+"第"+chapter_number+"章"+" "+"<br>";
 							var select_form_01_01 = '<h4>請選擇要修改標題的卷次:</h4>'
-												   +'<form>'
+												   +'<form action="ManageAuthorService.do" method="POST">'
+												   +'<input type="hidden" name="function_type" value="alter_volume_mid">'
+												   +'<input type="hidden" name="author_id" value="'+author_id+'">'
+												   +'<input type="hidden" name="book_id" value="'+book_id+'">'
 												   +'第'
 												   +'<select name="alter_volumeId">';
 							var select01_opt;
@@ -167,7 +161,10 @@ $(function(){
 
 												
 							var select_form_02_01 = '<h4>請選擇要修改內容的章節:</h4>'
-												+'<form>'	
+												+'<form action="ManageAuthorService.do" method="POST">'
+												+'<input type="hidden" name="function_type" value="alter_chapter_mid">'
+												+'<input type="hidden" name="author_id" value="'+author_id+'">'
+												+'<input type="hidden" name="book_id" value="'+book_id+'">'
 												+'第'
 												+'<select id="select_vol" name="alter_volumeId">'
 												+'<option id="option_temp"  value ="">---</option>';
@@ -203,10 +200,6 @@ $(function(){
 	});	
 		
 	
-	
-	
-	
-	
 	$(document).on('change','#select_vol',function(event){
 		$('#option_temp').remove();
 
@@ -222,28 +215,24 @@ $(function(){
 		+"&book_id="+$('#EditContent_chooseBookId').val()+"&volume_id="+$('#select_vol').val();
 		xhr.send(data);
 		
-		
-		
 		var Max_chapter_number;
 		
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === 4){
 				if (xhr.status === 200){
-						Max_chapter_number=xhr.responseText;
-				
-		
-//				alert(Max_chapter_number);
-				var Refine_select_temp;
-				var Refine_select_opt;
-				for(var i=1;i<=Max_chapter_number;i++){
-					Refine_select_temp = '<option value ="'+i+'">'+i+'</option>';
-					Refine_select_opt = Refine_select_opt + Refine_select_temp;
+					Max_chapter_number=xhr.responseText;
+	
+	//				alert(Max_chapter_number);
+					var Refine_select_temp;
+					var Refine_select_opt;
+					for(var i=1;i<=Max_chapter_number;i++){
+						Refine_select_temp = '<option value ="'+i+'">'+i+'</option>';
+						Refine_select_opt = Refine_select_opt + Refine_select_temp;
 				}
 
 				$('#select_ch').empty();
 				$('#select_ch').append(Refine_select_opt);
 			
-		
 				}
 			}
 		}
@@ -251,30 +240,6 @@ $(function(){
 	
 	});
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
 });
 

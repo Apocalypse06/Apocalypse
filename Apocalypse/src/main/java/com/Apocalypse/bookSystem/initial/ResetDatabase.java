@@ -65,10 +65,10 @@ public class ResetDatabase {
 	    // 定義刪除COMMENT表格的SQL命令
 	    dropString = "DROP Table comments " ;
 	    executeUpdate(dropString, "刪除comments表格", stmt);	    
-//	     定義刪除bookList表格的SQL命令
+	    // 定義刪除bookList表格的SQL命令
 	    dropString = "DROP Table bookList " ;
 	    executeUpdate(dropString, "刪除bookList表格", stmt);	    
-//	     定義刪除check_chapter表格的SQL命令
+	    // 定義刪除check_chapter表格的SQL命令
 	    dropString = "DROP Table check_chapter " ;
 	    executeUpdate(dropString, "刪除check_chapter表格", stmt);	    
 	    // 定義刪除chapter表格的SQL命令
@@ -365,18 +365,16 @@ public class ResetDatabase {
 	    		"  CONSTRAINT pk_checkChapter_bookId_volumeId_chapterId PRIMARY KEY (book_Id, volume_Id, chapter_id)   /*以bookID及volumeID及chapterID組成複合主鍵  */" + 
 	    		") ENGINE=INNODB CHARACTER SET UTF8 COLLATE utf8_general_ci;";
 	    executeUpdate(createString, "建立check_chapter表格", stmt);
-		// 定義建立check_chapter表格的SQL命令	    
+		// 定義建立edit_chapter表格的SQL命令	    
 	    createString = "CREATE TABLE edit_chapter ( " + 
 	    		"  book_Id         INT NOT NULL,                         /*這章節屬於哪一本書        */" + 
 	    		"  volume_Id       INT NOT NULL,         	        /*這章節屬於哪一卷          */ " + 
 	    		"  chapter_id      INT NOT NULL , 	                /*章節內容ID                */ " + 
 	    		"  chapter_title   VARCHAR(32) NOT NULL,                 /*章節名稱                  */ " + 
 	    		"  chapter_content TEXT NOT NULL,                        /*章節內容                  */" + 
-	    		"  content_Name    VARCHAR(50) NOT NULL,                 /*章節檔案名稱              */" + 
-	    		"  publish_time    TIMESTAMP NOT NULL DEFAULT NOW(),     /*發布日期                  */ " + 
 	    		"  last_modified   TIMESTAMP NOT NULL DEFAULT NOW(),     /*最後修改時間              */ " + 
 	    		"  price           INT NOT NULL DEFAULT 5 ,             /*章節價錢 (點數)           */ " + 
-	    		"  CONSTRAINT fk_editChapter_bookId_volumeId FOREIGN KEY (book_Id, volume_Id) REFERENCES edit_volume (book_Id, volume_Id),  /*以卷ID及書本ID組成複合外來鍵*/" + 
+	    		"  CONSTRAINT fk_editChapter_bookId_volumeId FOREIGN KEY (book_Id, volume_Id) REFERENCES volume (book_Id, volume_Id),  /*以卷ID及書本ID組成複合外來鍵*/" + 
 	    		"  CONSTRAINT pk_editChapter_bookId_volumeId_chapterId PRIMARY KEY (book_Id, volume_Id, chapter_id)   /*以bookID及volumeID及chapterID組成複合主鍵  */" + 
 	    		") ENGINE=INNODB CHARACTER SET UTF8 COLLATE utf8_general_ci;";
 	    executeUpdate(createString, "建立edit_chapter表格", stmt);

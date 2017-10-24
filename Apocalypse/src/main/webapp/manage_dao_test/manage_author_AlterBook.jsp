@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="css/alterBook_style.css">
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/alterBook_script.js"></script>
-		<title>修改以上架書本資料</title>		
+		<title>修改已上架書本資料</title>		
 	</Head>
 
 	<body>
@@ -24,7 +24,7 @@
 					
 					<img src="/Booksystem/fakedata_resources/${bb_edit.surface_Plot_Name}.jpg" width="150px" height="300px"><P/>					
 					簡介:<p/>
-					<textarea style="overflow-x:hidden;overflow-y:auto;" 
+					<textarea disabled="disabled" style="overflow-x:hidden;overflow-y:auto;" 
 					name="intro" cols="80" rows="10">${bb_edit.intro}</textarea><P/>
 					<br>
 				</div>

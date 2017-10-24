@@ -29,9 +29,7 @@ import com.Apocalypse.bookSystem.model.VolumeBean;
  * Servlet implementation class ManageAuthorService
  */
 
-@WebServlet(
-		urlPatterns= {"/service/ManageAuthorService","/manage_dao_test/ManageAuthorService.do"}			
-	)
+@WebServlet(urlPatterns= {"/service/ManageAuthorService","/manage_dao_test/ManageAuthorService.do"})
 @MultipartConfig(maxFileSize=-1)
 
 
@@ -92,11 +90,16 @@ public class ManageAuthorService extends HttpServlet {
 		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("alter_newcontent_intro"))){	
 			processRequest_08(request,response);
 		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("alter_chapter_intro"))){	
-			processRequest_11(request,response);	
+			processRequest_11(request,response);				
+		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("alter_volume_mid"))){	
+			processRequest_12(request,response);
+		}else if(path.equals("manage_author_AlterVolume.jsp")&&(function_type.equals("alter_volume_end"))){	
+			processRequest_13(request,response);	
+		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("alter_chapter_mid"))){	
+			processRequest_14(request,response);	
 			
-			
-			
-			
+		}else if(path.equals("manage_author_AlterChapter.jsp")&&(function_type.equals("alter_chapter_end"))){	
+			processRequest_15(request,response);	
 
 			
 		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("refresh_booktable"))){
@@ -146,14 +149,14 @@ public class ManageAuthorService extends HttpServlet {
 		java.sql.Date publishDate = new java.sql.Date(timeDot);
 		String setSurfacePlotName = "A"+authorId+"T"+String.valueOf(timeDot);
 		
-		String defaultPicPath = "D:/_JSP/workspace/Booksystem/src/main/webapp/fakedata_resources/default.jpg";
+		String defaultPicPath = "F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/fakedata_resources/default.jpg";
 
 		if (request.getPart("surface_plot").getSize() != 0) {
 			Part filePart1 = request.getPart("surface_plot");
 	//        String header = filePart1.getHeader("Content-Disposition");
 	//        String filename = header.substring(header.indexOf("filename=\"") + 10, header.lastIndexOf("\""));
 	        InputStream in = filePart1.getInputStream();	
-	        OutputStream out = new FileOutputStream("D:/_JSP/workspace/Booksystem/src/main/webapp/fakedata_resources/" + setSurfacePlotName +".jpg");		
+	        OutputStream out = new FileOutputStream("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/fakedata_resources/" + setSurfacePlotName +".jpg");		
 	        byte[] buffer = new byte[1024];
 	        int length = -1;
 	        while ((length = in.read(buffer)) != -1) {
@@ -164,7 +167,7 @@ public class ManageAuthorService extends HttpServlet {
 		}else{
 			File file = new File(defaultPicPath);
 			InputStream in = new FileInputStream(file);
-			OutputStream out = new FileOutputStream("D:/_JSP/workspace/Booksystem/src/main/webapp/fakedata_resources/" + setSurfacePlotName +".jpg");		
+			OutputStream out = new FileOutputStream("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/fakedata_resources/" + setSurfacePlotName +".jpg");		
 	        byte[] buffer = new byte[1024];
 	        int length = -1;
 	        while ((length = in.read(buffer)) != -1) {
@@ -245,15 +248,12 @@ public class ManageAuthorService extends HttpServlet {
 		}
 		
 		String All_in = String.valueOf(max_VolumeNumber)+"|"+volume_Title+"|"+String.valueOf(max_ChapterNumber)+"|"+chapter_Title;
-		
-		
-		
+		mabd.connectClose();
+				
 		response.setContentType("text/plain; charset=UTF-8");		
 		PrintWriter out = response.getWriter();
-
 		out.println(All_in);
-		out.flush();
-		
+		out.flush();		
 		return;	
 	}	
 	
@@ -277,7 +277,6 @@ public class ManageAuthorService extends HttpServlet {
 		response.sendRedirect(getServletContext().getContextPath()+"/manage_dao_test/manage_author_UploadVolume.jsp");
 		return;	
 	}
-	
 	
 	
 	private void processRequest_04(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -350,11 +349,7 @@ public class ManageAuthorService extends HttpServlet {
 		return;	
 	}
 	
-	
-	
-	
-	
-	
+
 	private void processRequest_05(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String authorId = request.getParameter("author_id"); 
@@ -388,7 +383,6 @@ public class ManageAuthorService extends HttpServlet {
 			
 		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
 		bb_edit      = mabd.findBookByAuthorIdBookId(author_Id,book_Id);
-
 		mabd.connectClose();
 		
 		//暫時性輸出
@@ -405,14 +399,13 @@ public class ManageAuthorService extends HttpServlet {
 		String bookId = request.getParameter("book_id"); 
 		int    book_Id = Integer.valueOf(bookId);
 		
-		String setSurfacePlotName = request.getParameter("surface_plot_name");
-		
-		String defaultPicPath = "D:/_JSP/workspace/Booksystem/src/main/webapp/edit_bookcover_resources/default.jpg";
+		String setSurfacePlotName = request.getParameter("surface_plot_name");		
+		String defaultPicPath = "F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/edit_bookcover_resources/default.jpg";
 
 		if (request.getPart("edit_surface_plot").getSize() != 0) {
 			Part filePart1 = request.getPart("edit_surface_plot");
 	        InputStream in = filePart1.getInputStream();	
-	        OutputStream out = new FileOutputStream("D:/_JSP/workspace/Booksystem/src/main/webapp/edit_bookcover_resources/" + setSurfacePlotName +".jpg");		
+	        OutputStream out = new FileOutputStream("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/edit_bookcover_resources/" + setSurfacePlotName +".jpg");		
 	        byte[] buffer = new byte[1024];
 	        int length = -1;
 	        while ((length = in.read(buffer)) != -1) {
@@ -423,7 +416,7 @@ public class ManageAuthorService extends HttpServlet {
 		}else{
 			File file = new File(defaultPicPath);
 			InputStream in = new FileInputStream(file);
-			OutputStream out = new FileOutputStream("D:/_JSP/workspace/Booksystem/src/main/webapp/edit_bookcover_resources/" + setSurfacePlotName +".jpg");		
+			OutputStream out = new FileOutputStream("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/edit_bookcover_resources/" + setSurfacePlotName +".jpg");		
 	        byte[] buffer = new byte[1024];
 	        int length = -1;
 	        while ((length = in.read(buffer)) != -1) {
@@ -470,10 +463,7 @@ public class ManageAuthorService extends HttpServlet {
 		return;	
 	}
 	
-	
-	
-	
-	
+
 	private void processRequest_08(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String authorId = request.getParameter("author_id");
@@ -505,66 +495,201 @@ public class ManageAuthorService extends HttpServlet {
 		System.out.println("第"+max_ChapterNumber+"章"+", 章名:"+chapter_Title);
 		}
 		String All_in = String.valueOf(max_VolumeNumber)+"|"+volume_Title+"|"+String.valueOf(max_ChapterNumber)+"|"+chapter_Title;
-		
 		mabd.connectClose();
+		
+		response.setContentType("text/plain; charset=UTF-8");		
+		PrintWriter out = response.getWriter();
+		out.println(All_in);
+		out.flush();		
+		return;	
+	}
+	
+	
+	private void processRequest_11(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String authorId = request.getParameter("author_id"); 
+		int    author_Id = Integer.valueOf(authorId);
+		String bookId = request.getParameter("book_id"); 
+		int    book_Id = Integer.valueOf(bookId);
+		String volumeId = request.getParameter("volume_id"); 
+		int    volume_Id = Integer.valueOf(volumeId);
+		int maxChapterNumber;
+		
+		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
+		maxChapterNumber = mabd.findMaxChapterNumber(book_Id,volume_Id);
+		String All_in = String.valueOf(maxChapterNumber);
+		mabd.connectClose();
+		
 		response.setContentType("text/plain; charset=UTF-8");		
 		PrintWriter out = response.getWriter();
 		out.println(All_in);
 		out.flush();
+		return;
+
+	}
+	
+	
+	private void processRequest_12(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String authorId = request.getParameter("author_id");
+		int    author_Id = Integer.valueOf(authorId);
+		String bookId = request.getParameter("book_id");
+		int    book_Id = Integer.valueOf(bookId);
+		String volumeId = request.getParameter("alter_volumeId");
+		int    volume_Id = Integer.valueOf(volumeId);
+		String volume_Title;
+
+		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
+		volume_Title     = mabd.findVolumeTitle(book_Id,volume_Id);
+		mabd.connectClose();
 		
+		request.getSession().setAttribute("authorId",author_Id);
+		request.getSession().setAttribute("bookId", book_Id);
+		request.getSession().setAttribute("volumeId", volume_Id);
+		request.getSession().setAttribute("volumeTitle", volume_Title);
+		response.sendRedirect(getServletContext().getContextPath()+"/manage_dao_test/manage_author_AlterVolume.jsp");
+		return;	
+	
+	}	
+	
+	
+	private void processRequest_14(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String authorId = request.getParameter("author_id");
+		int    author_Id = Integer.valueOf(authorId);
+		String bookId = request.getParameter("book_id");
+		int    book_Id = Integer.valueOf(bookId);
+		String volumeId = request.getParameter("alter_volumeId");
+		int    volume_Id = Integer.valueOf(volumeId);
+		String chapterId = request.getParameter("alter_chapterId");
+		int    chapter_Id = Integer.valueOf(chapterId);
+		
+		String volume_Title;
+		String chapter_Title;
+		String chapter_Content;
+		
+		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
+		volume_Title     = mabd.findVolumeTitle(book_Id,volume_Id);
+		chapter_Title     = mabd.findChapterTitle(book_Id,volume_Id,chapter_Id);
+		chapter_Content   = mabd.findChapterContent(book_Id,volume_Id,chapter_Id);
+		mabd.connectClose();
+		
+		request.getSession().setAttribute("authorId",author_Id);
+		request.getSession().setAttribute("bookId",book_Id);
+		request.getSession().setAttribute("volumeId",volume_Id);
+		request.getSession().setAttribute("volumeTitle",volume_Title);
+		request.getSession().setAttribute("chapterId",chapter_Id);
+		request.getSession().setAttribute("chapterTitle",chapter_Title);
+		request.getSession().setAttribute("chapterContent",chapter_Content);
+		response.sendRedirect(getServletContext().getContextPath()+"/manage_dao_test/manage_author_AlterChapter.jsp");
+		return;	
+	
+	}
+	
+	
+	
+	private void processRequest_13(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+		request.setCharacterEncoding("UTF-8");
+		String authorId = request.getParameter("author_id"); 
+		int    author_Id = Integer.valueOf(authorId);
+		String bookId = request.getParameter("book_id"); 
+		int    book_Id = Integer.valueOf(bookId);
+		String volumeId = request.getParameter("volume_id"); 
+		int    volume_Id = Integer.valueOf(volumeId);
+		String volumeTitle = request.getParameter("volume_title");
+		
+		VolumeBean edit_vb = new VolumeBean();
+		edit_vb.setBookId(book_Id);
+		edit_vb.setVolumeId(volume_Id);
+		edit_vb.setVolumeTitle(volumeTitle);
+
+        List<BookBean> bbs = new ArrayList<>();
+        List<BookBean> cbbs = new ArrayList<>();
+		String pen_Name;
+		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
+		int result = mabd.alterVolumeAsAuthor(edit_vb);
+		bbs      = mabd.findBooksByAuthorId(author_Id);
+		cbbs      = mabd.findCheckBooksByAuthorId(author_Id);
+		pen_Name = mabd.findPenNameByAuthorId(author_Id);
+		mabd.connectClose();
+					
+		if (result == 1) {
+			messageBase = messageBase + messageAdd;
+			messageAdd = "\r\n"+"上架書本之第"+volumeId+"卷標題修改申請成功，請靜候審查結果"; 
+		}else{
+			messageBase = messageBase + messageAdd;
+			messageAdd = "\r\n"+"上架書本之第"+volumeId+"卷標題修改申請失敗，請洽系統管理員";
+		}		
+		//暫時性輸出
+		request.getSession().setAttribute("penName",pen_Name);
+		request.getSession().setAttribute("authorId",author_Id);
+		request.getSession().setAttribute("bbs", bbs);
+		request.getSession().setAttribute("cbbs", cbbs);
+		request.getSession().setAttribute("messageBase",messageBase);
+		request.getSession().setAttribute("messageAdd",messageAdd);	
+		response.sendRedirect(getServletContext().getContextPath()+"/manage_dao_test/manage_author_Index.jsp");
 		return;	
 	}
 	
 	
 	
 	
-	private void processRequest_11(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+	
+	
+	
+	
+	
+	
+	
+	
+	private void processRequest_15(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
 		request.setCharacterEncoding("UTF-8");
-		String authorId = request.getParameter("author_id");
+		String authorId = request.getParameter("author_id"); 
 		int    author_Id = Integer.valueOf(authorId);
-		String bookId = request.getParameter("book_id");
+		String bookId = request.getParameter("book_id"); 
 		int    book_Id = Integer.valueOf(bookId);
-		String volumeId = request.getParameter("volume_id");
+		String volumeId = request.getParameter("volume_id"); 
 		int    volume_Id = Integer.valueOf(volumeId);
-
+		String volumeTitle = request.getParameter("volume_title");
+		String chapterId = request.getParameter("chapter_id"); 
+		int    chapter_Id = Integer.valueOf(chapterId);
+		String chapterTitle = request.getParameter("chapter_title");
+		String chapterContent = request.getParameter("chapter_content");
 		
+		ChapterBean edit_cb = new ChapterBean();
+		edit_cb.setBookId(book_Id);
+		edit_cb.setVolumeId(volume_Id);
+		edit_cb.setChapterId(chapter_Id);
+		edit_cb.setChapterTitle(chapterTitle);
+		edit_cb.setChapterContent(chapterContent);
 
-		int	    max_ChapterNumber;	
-
-		
+        List<BookBean> bbs = new ArrayList<>();
+        List<BookBean> cbbs = new ArrayList<>();
+		String pen_Name;
 		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
-
-		
-		
-		
-
-		
-		max_ChapterNumber = mabd.findMaxChapterNumber(book_Id,volume_Id);
-
-
-		
-		
-		String All_in =String.valueOf(max_ChapterNumber);
-		
-		
-		
-		response.setContentType("text/plain; charset=UTF-8");		
-		PrintWriter out = response.getWriter();
-
-		out.println(All_in);
-		out.flush();
+		int result = mabd.alterChapterAsAuthor(edit_cb);
+		bbs      = mabd.findBooksByAuthorId(author_Id);
+		cbbs      = mabd.findCheckBooksByAuthorId(author_Id);
+		pen_Name = mabd.findPenNameByAuthorId(author_Id);
+		mabd.connectClose();
+					
+		if (result == 1) {
+			messageBase = messageBase + messageAdd;
+			messageAdd = "\r\n"+"上架書本之第"+volumeId+"卷--第"+chapterId+"章資料修改申請成功，請靜候審查結果"; 
+		}else{
+			messageBase = messageBase + messageAdd;
+			messageAdd = "\r\n"+"上架書本之第"+volumeId+"卷--第"+chapterId+"章資料修改申請失敗，請洽系統管理員";
+		}		
+		//暫時性輸出
+		request.getSession().setAttribute("penName",pen_Name);
+		request.getSession().setAttribute("authorId",author_Id);
+		request.getSession().setAttribute("bbs", bbs);
+		request.getSession().setAttribute("cbbs", cbbs);
+		request.getSession().setAttribute("messageBase",messageBase);
+		request.getSession().setAttribute("messageAdd",messageAdd);	
+		response.sendRedirect(getServletContext().getContextPath()+"/manage_dao_test/manage_author_Index.jsp");
 		return;	
-	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}
 	
 	
 	
@@ -642,27 +767,4 @@ public class ManageAuthorService extends HttpServlet {
 	}
 		
 	
-
-	
-	
-	
-	
-
-	
-	
-	
-
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

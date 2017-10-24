@@ -1,0 +1,52 @@
+html,body, div, span,a,ul,li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	background-color:#99ffbb;
+}
+
+ul li{
+	float:left;
+	margin-right:1px;
+	list-style-type:none;
+}
+
+#uploadChapter_zone{
+	position:absolute;
+	left:760px;
+	top:0px;
+	margin-bottom:150px;
+	background-color:#84e1e1;
+	width:750px;
+	height:850px;  
+	border:2px dotted red;
+}
+
+
+#uploadChapter_contents textarea{
+	width:600px;
+	height:200px;
+}
+
+
+
+
+
+#beforeChapter_zone{
+	width:750px;
+	height:850px; 
+	border:2px dotted red;	
+	background-color:#00e6ac;
+}
+
+
+#beforeChapter_contents textarea{
+	width:600px;
+	height:200px;
+}
+
