@@ -1,0 +1,54 @@
+html,body, div, span,a,ul,li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	background-color:#99ffbb;
+}
+
+ul li{
+	float:left;
+	margin-right:1px;
+	list-style-type:none;
+}
+
+
+#operate_zone{
+	width:750px;
+	height:850px; 
+	border:2px dotted red;	
+	background-color:#009999;
+}
+
+
+
+#dispTxt_zone{
+	position:absolute;
+	left:760px;
+	top:0px;
+	margin-bottom:150px;
+	background-color:#00e6ac;
+	width:750px;
+	height:850px;  
+	border:2px dotted red;
+
+}
+
+
+#dispTxt_contents textarea{
+	width:600px;
+	height:200px;
+}
+
+#operate_contents textarea{
+	width:600px;
+	height:200px;
+}
+
+
+
+

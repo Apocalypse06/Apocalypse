@@ -1,0 +1,40 @@
+html,body, div, span,a,ul,li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	background-color:#99ffbb;
+}
+
+ul li{
+	float:left;
+	margin-right:1px;
+	list-style-type:none;
+}
+
+
+#uploadVolume_zone{
+	width:750px;
+	height:850px; 
+	border:2px dotted red;	
+	background-color:#00e6ac;
+}
+
+
+
+
+
+
+#uploadVolume_contents textarea{
+	width:600px;
+	height:200px;
+}
+
+
+
+
+
