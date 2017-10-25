@@ -5,9 +5,9 @@
 <HTML>
 	<Head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="css/style.css">
-		<script src="js/jquery-3.2.1.min.js"></script>
-		<script src="js/script.js"></script>
+		<link rel="stylesheet" href="<c:url value="/manage_dao_test/css/style.css"/>">
+		<script src="/manage_dao_test/js/jquery-3.2.1.min.js"></script>
+		<script src="/manage_dao_test/js/script.js"></script>
 		<title>作家管理功能測試主頁</title>		
 	</Head>
 
