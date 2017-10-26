@@ -26,9 +26,11 @@ $(function(){
 	});
 
 		
-	$('#NewChapter_chooseBookId').change(function(){		
+	$('#NewChapter_chooseBookId').change(function(){
 		if($('#NewChapter_chooseBookId').val() != 'none'){
-//			alert("!!!");
+			
+//			alert($('#NewChapter_author_id').val());
+			
 			var xhr = null;
 			if(window.XMLHttpRequest){
 				xhr = new XMLHttpRequest();
@@ -40,6 +42,8 @@ $(function(){
 			var data = "function_type=upload_newcontent_intro&"+"author_id="+$('#NewChapter_author_id').val()
 			+"&book_id="+$('#NewChapter_chooseBookId').val();
 			xhr.send(data);
+			
+
 			
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState === 4){

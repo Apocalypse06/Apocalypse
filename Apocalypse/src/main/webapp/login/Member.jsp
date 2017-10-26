@@ -91,7 +91,7 @@
  				 <td>
  				   <div>
 	 				   <c:if test="${LoginOK.role_id==3}">
-	 				       <a href="<c:url value='/index.jsp' />">
+	 				       <a href="<c:url value='/manage_dao_test/ManageAuthorService.do?author_id=${LoginOK_Author.author_Id}' />">
 	 				           	我的作品
 	 				       </a>
 	 				   </c:if>   

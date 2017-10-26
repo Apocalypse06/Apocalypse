@@ -51,10 +51,10 @@ public class BookService {
           	
 		return list;
 	}
-	public List<Sub_commentsBean> selectSub_Commets_by_Comments_Id(int comment_Id)throws SQLException {
+	public List<Sub_commentsBean> selectSub_Commets_by_Comments_Id(int comment_Id , int book_Id)throws SQLException {
 		
 		BookDAO dao = new BookDAO();
-		List<Sub_commentsBean> list = dao.selectSub_Commets_by_Comments_Id(comment_Id);
+		List<Sub_commentsBean> list = dao.selectSub_Commets_by_Comments_Id(comment_Id , book_Id);
           	
 		return list;
 	}

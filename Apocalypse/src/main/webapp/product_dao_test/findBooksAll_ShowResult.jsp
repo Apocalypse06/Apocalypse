@@ -11,7 +11,7 @@
 		<h2>查詢全部書本-02</h2>
 	<c:forEach var="book" items="${bbs}">
 		<br>BookID:${book.bookId}
-		<br><img src="/Booksystem//fakedata_resources/${book.surface_Plot_Name}.jpg" width="150px" height="300"	>
+		<br><img src="/Apocalypse//fakedata_resources/${book.surface_Plot_Name}.jpg" width="150px" height="300"	>
 		<br>Title:${book.title}
 		<br>AuthorId:${book.authorId}
 		<br>Author:${book.penName}

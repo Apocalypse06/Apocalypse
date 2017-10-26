@@ -14,10 +14,10 @@ public class GlobalService {
 	public static final String DB_URL = "jdbc:sqlserver://" + GlobalService.host + ":1433;databaseName=IREAD" ;
 	public static final String DB_URLMySQL = "jdbc:mysql://" + GlobalService.host + "/IREAD?useUnicode=yes&characterEncoding=utf8" ;
 	public static final String SERVER_PATH = "D:/_JSP/tomcat8/webapps/";
-	public static final String IMAGES_PATH = SERVER_PATH + "MemberSystem/images/";
+	public static final String IMAGES_PATH = SERVER_PATH + "Apocalypse/images/";
 	public static final String HEAD_SHOT_PATH = IMAGES_PATH + "member/";
 	public static final String SURFACE_PLOT_PATH = IMAGES_PATH + "book/";
-	public static final String CHAPTER_PATH = SERVER_PATH + "/MemberSystem/chapter/";
+	public static final String CHAPTER_PATH = SERVER_PATH + "/Apocalypse/chapter/";
 	public static final int RANKING_DISPLAY_LIMIT = 5 ;
 	
 	//public static final String KEY = "KittySnoopyMicky";  // 16, 24, 32

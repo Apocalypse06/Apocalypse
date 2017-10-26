@@ -174,8 +174,9 @@ public class BookDAO {
 								result.setComment_time(rset.getTimestamp("comment_time"));
 								result.setUpdate_time(rset.getTimestamp("update_time"));
 								result.setComment(rset.getString("comment"));
-								
 								list.add(result);
+								//list.add(selectSub_Commets_by_Comments_Id(rset.getInt("comment_Id")));
+								
 							}
 					  }
 				}
@@ -204,37 +205,40 @@ public class BookDAO {
 				return result;
 			}
 			//用comment_Id找出此書的SUB_COMMENTS資料 
-			private static final String SELECT_SUB_COMMENTS_BY_COMMENTS_ID = "Select * from Sub_comments where comment_Id = ? ";
+			private static final String SELECT_SUB_COMMENTS_BY_COMMENTS_ID = "Select * from Sub_comments where comment_Id = ? and book_Id=?";
 			
-			public ArrayList<Sub_commentsBean> selectSub_Commets_by_Comments_Id(int comment_Id) throws SQLException {
+			public ArrayList<Sub_commentsBean> selectSub_Commets_by_Comments_Id(int comment_Id , int book_Id) throws SQLException {
 				ArrayList<Sub_commentsBean> list = new ArrayList<>();
-				
+				//MemberDAO md =new MemberDAO();
 				try(
 					Connection conn = ds.getConnection();
 					PreparedStatement stmt = conn.prepareStatement(SELECT_SUB_COMMENTS_BY_COMMENTS_ID);
 				){
 					stmt.setInt(1, comment_Id);
+					stmt.setInt(2, book_Id);
 					try(
 							ResultSet rset = stmt.executeQuery();
 					){
 						   while(rset.next()) {
 							   Sub_commentsBean result = new Sub_commentsBean() ;
 							   	result.setSub_comment_id(rset.getInt("sub_comment_id"));
+							   	result.setBook_Id(rset.getInt("book_Id"));
 							   	result.setComment_Id(rset.getInt("comment_Id"));
 								result.setMember_Id(rset.getString("member_Id"));
 								result.setComment_time(rset.getTimestamp("comment_time"));
 								result.setUpdate_time(rset.getTimestamp("update_time"));
 								result.setComments(rset.getString("comments"));
-								
 								list.add(result);
+								//md.select_by_id(rset.getString("member_Id"));
+								//list.add(md);
 							}
 					  }
 				}
-				
+				//System.out.println(list);
 				return list;
 			}
 			//新增一個副留言
-			private static final String INSERT3 = "Insert into Sub_comments ( comment_Id, member_Id, comment_time, comments) values (?, ?, ?, ?)";
+			private static final String INSERT3 = "Insert into Sub_comments ( book_Id,comment_Id, member_Id, comment_time, comments) values (?,?, ?, ?, ?)";
 			
 			public int insertSub_comments(Sub_commentsBean bean) throws SQLException {
 				int result = 0;
@@ -242,11 +246,11 @@ public class BookDAO {
 						Connection conn = ds.getConnection();
 						PreparedStatement stmt = conn.prepareStatement(INSERT3);
 				){
-					
-					stmt.setInt(1, bean.getComment_Id());
-					stmt.setString(2, bean.getMember_Id());
-					stmt.setTimestamp(3, bean.getComment_time());
-					stmt.setString(4, bean.getComments());
+					stmt.setInt(1, bean.getBook_Id());
+					stmt.setInt(2, bean.getComment_Id());
+					stmt.setString(3, bean.getMember_Id());
+					stmt.setTimestamp(4, bean.getComment_time());
+					stmt.setString(5, bean.getComments());
 					
 					result = stmt.executeUpdate();
 					

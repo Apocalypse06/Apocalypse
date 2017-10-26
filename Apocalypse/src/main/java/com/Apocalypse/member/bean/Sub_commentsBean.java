@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 public class Sub_commentsBean {
 	private static final long serialVersionUID = 1L;
 	private int sub_comment_id;
-
+	private int book_Id;
 	private int comment_Id;
 	private String member_Id;
 	private java.sql.Timestamp comment_time;
@@ -20,8 +20,18 @@ public class Sub_commentsBean {
 				+ "]";
 	}
 
-	public Sub_commentsBean(int comment_Id, String member_Id, Timestamp comment_time, String comments) {
+//	public Sub_commentsBean(int comment_Id, String member_Id, Timestamp comment_time, String comments) {
+//		super();
+//		this.comment_Id = comment_Id;
+//		this.member_Id = member_Id;
+//		this.comment_time = comment_time;
+//		this.comments = comments;
+//	}
+
+	
+	public Sub_commentsBean(int book_Id, int comment_Id, String member_Id, Timestamp comment_time, String comments) {
 		super();
+		this.book_Id = book_Id;
 		this.comment_Id = comment_Id;
 		this.member_Id = member_Id;
 		this.comment_time = comment_time;
@@ -38,6 +48,14 @@ public class Sub_commentsBean {
 
 	public void setSub_comment_id(int sub_comment_id) {
 		this.sub_comment_id = sub_comment_id;
+	}
+
+	public int getBook_Id() {
+		return book_Id;
+	}
+
+	public void setBook_Id(int book_Id) {
+		this.book_Id = book_Id;
 	}
 
 	public int getComment_Id() {
@@ -83,5 +101,7 @@ public class Sub_commentsBean {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	
 
 }

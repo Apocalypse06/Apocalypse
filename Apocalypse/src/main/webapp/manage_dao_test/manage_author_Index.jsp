@@ -125,8 +125,7 @@
 					<c:forEach var="book" varStatus="status" items="${bbs}">
  						<div style="position:absolute;top:${25+400*status.count-400}px;left:10px;width:550px;height:500x;border:3px solid blue;"> 
 							<br>BookID:${book.bookId}
-							<br><img src="/Booksystem/fakedata_resources/${book.surface_Plot_Name}.jpg" width="150px" height="300px">
-						
+							<br><img src="/Apocalypse//fakedata_resources/${book.surface_Plot_Name}.jpg" width="150px" height="300px">						
 	  						 <div style="position:absolute;top:20px;left:200px;width:300px;height:310px;border:3px solid purple;"> 
 								<br>Title:${book.title}
 								<br>AuthorId:${book.authorId}
@@ -151,7 +150,7 @@
 							<c:forEach var="cbook" varStatus="status" items="${cbbs}">
 	 						<div style="position:absolute;top:${25+400*status.count-400}px;left:10px;width:550px;height:500x;border:3px solid blue;"> 
 								<br>BookID:${cbook.bookId}
-								<br><img src="/Booksystem/fakedata_resources/${cbook.surface_Plot_Name}.jpg" width="150px" height="300px">
+								<br><img src="/Apocalypse//fakedata_resources/${cbook.surface_Plot_Name}.jpg" width="150px" height="300px">
 							
 		  						 <div style="position:absolute;top:20px;left:200px;width:300px;height:310px;border:3px solid purple;"> 
 									<br>Title:${cbook.title}

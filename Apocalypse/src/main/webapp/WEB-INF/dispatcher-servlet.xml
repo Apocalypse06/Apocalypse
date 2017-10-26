@@ -24,7 +24,7 @@
 <!--  aspectj -->
  	<mvc:resources mapping="/resources/css/**" location="/resources/css/" />
 	<mvc:resources mapping="/resources/js/**" location="/resources/js/" />
-	<mvc:resources mapping="/resources/img/**" location="/resources/img/" />
+	<mvc:resources mapping="/fakedata_resources/**" location="/fakedata_resources/" />
 	<mvc:annotation-driven />
 <!-- 	interceptros -->
 <!-- 	<mvc:interceptors> -->

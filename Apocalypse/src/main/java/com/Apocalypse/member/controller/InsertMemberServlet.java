@@ -45,7 +45,7 @@ public class InsertMemberServlet extends HttpServlet {
 		String regex = null;		
 		boolean flag = true;
 		String email= request.getParameter("email");
-		System.out.println(email);
+	//	System.out.println(email);
 		
 		if(email != null) {
 			System.out.println(1);
@@ -53,7 +53,7 @@ public class InsertMemberServlet extends HttpServlet {
 			System.out.println(mb);
 			JavaMailMain mail=new JavaMailMain();
 			mail.sendmail_Changerole_id(mb.getMember_Id(),mb.getAccount());
-			System.out.println(2);
+		//	System.out.println(2);
 			out.println(gson.toJson(1));
 			out.close();
 			return;

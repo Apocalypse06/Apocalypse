@@ -12,7 +12,7 @@
 	<br>${result}
 	<hr>
 	<br>BookId:${bb.bookId}
-  	<br><img src="/Booksystem//fakedata_resources/${bb.surface_Plot_Name}.jpg" width="150px" height="300"	> 
+  	<br><img src="/Apocalypse//fakedata_resources/${bb.surface_Plot_Name}.jpg" width="150px" height="300"	> 
 	<br>Title:${bb.title}
 	<br>AuthorId:${bb.authorId}
 	<br>Author:${bb.penName}

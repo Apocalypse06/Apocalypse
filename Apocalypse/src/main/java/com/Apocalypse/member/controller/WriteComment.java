@@ -20,6 +20,8 @@ import com.Apocalypse.member.model.service.MemberService;
 import com.google.gson.Gson;
 
 
+
+
 @WebServlet("/login/WriteComment")
 public class WriteComment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,24 +46,36 @@ public class WriteComment extends HttpServlet {
 	    	 mcomment_id = Integer.parseInt(get);
 	    	 
 	    }
+		//System.out.println(mcomment_id);
 		String get2 = request.getParameter("book_Id");
-		
-		int book_Id=0;
-		if(get2 != null) {
-			book_Id = Integer.parseInt(get2);
+		 int book_Id = Integer.parseInt(get2);
 	    	 
-	    }
+	
 		
 		MemberBean mb=null;
+		MemberBean mb1=null;
 		BookService bs= new BookService();
 		MemberService ms= new MemberService();
 		mb=(MemberBean)session.getAttribute("LoginOK");
-		List<CommentsBean> commentlist=new ArrayList<>();
+		
+		//List<MemberBean> submemberlist=new ArrayList<>();
 		List<Sub_commentsBean> subcommentslist=new ArrayList<>();
+		List<List<Sub_commentsBean>> allsubcommentslist=new ArrayList<>();
+		
 		List<MemberBean> memberlist=new ArrayList<>();
+		List<MemberBean> submemberlist=new ArrayList<>();
+		List<List<MemberBean>> allsubcommentsMemberlist=new ArrayList<>();
+		
+		List<CommentsBean> commentlist=new ArrayList<>();
 		List<Integer> totlelist=new ArrayList<>();
 		List<Object> list=new ArrayList<>();
+		//list[memberlist(MemberBean)
+		//	   ,commentlist(CommentsBean)
+		//     ,totlelist(totle)
+		//     ,allsubcommentslist(subcommentslist(Sub_commentsBean))
+		//     ,allsubcommentsMemberlist(submemberlist(MemberBean))]
 		int totle=0; 
+		
 		
 		
 		if (comment != null && comment.trim().length() != 0) {
@@ -77,7 +91,8 @@ public class WriteComment extends HttpServlet {
 		}
 		if(subcomment != null && subcomment.trim().length() != 0) {
 			
-			Sub_commentsBean scb=new Sub_commentsBean(mcomment_id, mb.getMember_Id(), comment_time, subcomment);	
+			Sub_commentsBean scb=new Sub_commentsBean(book_Id,mcomment_id, mb.getMember_Id(), comment_time, subcomment);	
+			//System.out.println(scb);
 			try {
 				bs.insertSub_comments(scb);
 			} catch (Exception e) {
@@ -89,22 +104,34 @@ public class WriteComment extends HttpServlet {
 		
 		try {
 			commentlist=bs.selectCommets_by_book_id(book_Id);
-			
+			//System.out.println(commentlist);
 			for(CommentsBean cb:commentlist) {
 				
 				totle=bs.getSub_commentsBean(cb.getComment_Id());
 				totlelist.add(totle);
-				subcommentslist=bs.selectSub_Commets_by_Comments_Id(cb.getComment_Id());
+				subcommentslist=bs.selectSub_Commets_by_Comments_Id(cb.getComment_Id(),book_Id);
+				allsubcommentslist.add(subcommentslist);
+				
+				for(Sub_commentsBean scb:subcommentslist) {
+					mb1= ms.select_by_id(scb.getMember_Id());
+					//System.out.println(scb.getMember_Id());
+					submemberlist.add(mb1);
+					allsubcommentsMemberlist.add(submemberlist);
+				}
+				
 			}
 			//System.out.println(commentlist);
 			for(CommentsBean cb :commentlist) {
 				memberlist.add(ms.select_by_id(cb.getMember_Id()));
 			   // System.out.println(ms.select_by_id(cb.getMember_Id()));
 			}
+			//System.out.println("666"+subcommentslist);
+			
 			list.add(memberlist);
 			list.add(commentlist);
 			list.add(totlelist);
-			list.add(subcommentslist);
+			list.add(allsubcommentslist);
+			list.add(allsubcommentsMemberlist);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

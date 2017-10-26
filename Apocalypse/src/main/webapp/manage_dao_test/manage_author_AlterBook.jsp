@@ -22,7 +22,7 @@
 					<br>
 					<br>
 					
-					<img src="/Booksystem/fakedata_resources/${bb_edit.surface_Plot_Name}.jpg" width="150px" height="300px"><P/>					
+					<img src="/Apocalypse//fakedata_resources/${bb_edit.surface_Plot_Name}.jpg" width="150px" height="300px"><P/>					
 					簡介:<p/>
 					<textarea disabled="disabled" style="overflow-x:hidden;overflow-y:auto;" 
 					name="intro" cols="80" rows="10">${bb_edit.intro}</textarea><P/>
@@ -44,7 +44,7 @@
 							類型:<input type="text" name="classity" size="32" value="${bb_edit.classify}" ><P/>
 							封面圖:<p/>
 							<input id="alter_cover" type="file" name="edit_surface_plot" accept=".jpg"><P/>
-							<img id="alter_cover_disp" src="/Booksystem/fakedata_resources/${bb_edit.surface_Plot_Name}.jpg" width="150px" height="300px"><P/>
+							<img id="alter_cover_disp" src="/Apocalypse//fakedata_resources/${bb_edit.surface_Plot_Name}.jpg" width="150px" height="300px"><P/>
 
 							簡介:<p/>
 							<textarea style="overflow-x:hidden;overflow-y:auto;" 

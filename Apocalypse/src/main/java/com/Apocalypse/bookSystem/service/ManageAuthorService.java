@@ -18,12 +18,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.Apocalypse.bookSystem.dao.ManageAuthorBookDAO;
 import com.Apocalypse.bookSystem.model.BookBean;
 import com.Apocalypse.bookSystem.model.ChapterBean;
 import com.Apocalypse.bookSystem.model.VolumeBean;
+import com.Apocalypse.member.bean.AuthorBean;
 
 /**
  * Servlet implementation class ManageAuthorService
@@ -58,12 +60,14 @@ public class ManageAuthorService extends HttpServlet {
 	}
 	
 	
-	private void processSwitch(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+	private void processSwitch(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {		
 		String path = request.getHeader("referer").trim();
+		String path_other = request.getHeader("referer").trim();
 		String delet_path = "http://localhost:8080/Booksystem/manage_dao_test/";
 		String function_type = request.getParameter("function_type");
-		
 		path = path.substring(delet_path.length()).trim();
+		
+		//System.out.println(path_other);
 		
 		System.out.println("Path:"+path);
 		System.out.println("FunctionType:"+function_type);
@@ -73,7 +77,7 @@ public class ManageAuthorService extends HttpServlet {
 			processRequest_00(request,response);
 		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("upload_newbook"))){	
 			processRequest_01(request,response);
-		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("upload_newcontent_intro"))){	
+		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("upload_newcontent_intro"))){
 			processRequest_02(request,response);	
 		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("upload_newvolume_mid"))){	
 			processRequest_03(request,response);
@@ -96,28 +100,58 @@ public class ManageAuthorService extends HttpServlet {
 		}else if(path.equals("manage_author_AlterVolume.jsp")&&(function_type.equals("alter_volume_end"))){	
 			processRequest_13(request,response);	
 		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("alter_chapter_mid"))){	
-			processRequest_14(request,response);	
-			
+			processRequest_14(request,response);				
 		}else if(path.equals("manage_author_AlterChapter.jsp")&&(function_type.equals("alter_chapter_end"))){	
-			processRequest_15(request,response);	
-
-			
+			processRequest_15(request,response);				
 		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("refresh_booktable"))){
 			processRequest_09(request,response);
 		}else if(path.equals("manage_author_Index.jsp")&&(function_type.equals("refresh_checkbooktable"))){
-			processRequest_10(request,response);			
+			processRequest_10(request,response);
+		}
+			else if(path_other.equals("http://localhost:8080/Apocalypse/login/Member.jsp")){
+			processRequest_99(request,response);	
+			
+			
 		}else {
+						
 			System.out.println("cant found jsp source!");
 		}
 		
 		
 	}
-	
+	private void processRequest_99(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		AuthorBean as = (AuthorBean)session.getAttribute("LoginOK_Author"); 
+		int    author_Id = as.getAuthor_Id(); 
+		//int    author_Id = Integer.valueOf(authorId);		
+		List<BookBean> bbs = new ArrayList<>();
+		List<BookBean> cbbs = new ArrayList<>();
+		String pen_Name;
+		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
+		bbs      = mabd.findBooksByAuthorId(author_Id);
+		cbbs      = mabd.findCheckBooksByAuthorId(author_Id);
+		pen_Name = mabd.findPenNameByAuthorId(author_Id);
+		mabd.connectClose();
+		
+		messageBase = "歡迎~"+pen_Name;
+		messageAdd  = ""; 
+		//暫時性輸出
+		request.getSession().setAttribute("penName",pen_Name);
+		request.getSession().setAttribute("authorId",author_Id);
+		request.getSession().setAttribute("bbs", bbs);
+		request.getSession().setAttribute("cbbs", cbbs);
+		request.getSession().setAttribute("messageBase",messageBase);
+		request.getSession().setAttribute("messageAdd",messageAdd);	
+		response.sendRedirect(getServletContext().getContextPath()+"/manage_dao_test/manage_author_Index.jsp");
+		return;	
+	}
 
 	private void processRequest_00(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");		
 		String authorId = request.getParameter("author_id"); 
-		int    author_Id = Integer.valueOf(authorId);		
+		int    author_Id = Integer.valueOf(authorId);
+				
 		List<BookBean> bbs = new ArrayList<>();
 		List<BookBean> cbbs = new ArrayList<>();
 		String pen_Name;
@@ -147,16 +181,15 @@ public class ManageAuthorService extends HttpServlet {
 		int    author_Id = Integer.valueOf(authorId);
 		Long   timeDot =  new Date().getTime();
 		java.sql.Date publishDate = new java.sql.Date(timeDot);
-		String setSurfacePlotName = "A"+authorId+"T"+String.valueOf(timeDot);
-		
-		String defaultPicPath = "F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/fakedata_resources/default.jpg";
+		String setSurfacePlotName = "A"+authorId+"T"+String.valueOf(timeDot);		
+		String defaultPicPath = "D:/Users/PC-26/git1/Apocalypse/src/main/webapp/fakedata_resources/default.jpg";
 
 		if (request.getPart("surface_plot").getSize() != 0) {
 			Part filePart1 = request.getPart("surface_plot");
 	//        String header = filePart1.getHeader("Content-Disposition");
 	//        String filename = header.substring(header.indexOf("filename=\"") + 10, header.lastIndexOf("\""));
 	        InputStream in = filePart1.getInputStream();	
-	        OutputStream out = new FileOutputStream("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/fakedata_resources/" + setSurfacePlotName +".jpg");		
+	        OutputStream out = new FileOutputStream("D:/Users/PC-26/git1/Apocalypse/src/main/webapp/fakedata_resources/" + setSurfacePlotName +".jpg");		
 	        byte[] buffer = new byte[1024];
 	        int length = -1;
 	        while ((length = in.read(buffer)) != -1) {
@@ -167,7 +200,7 @@ public class ManageAuthorService extends HttpServlet {
 		}else{
 			File file = new File(defaultPicPath);
 			InputStream in = new FileInputStream(file);
-			OutputStream out = new FileOutputStream("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/fakedata_resources/" + setSurfacePlotName +".jpg");		
+			OutputStream out = new FileOutputStream("D:/Users/PC-26/git1/Apocalypse/src/main/webapp/fakedata_resources/" + setSurfacePlotName +".jpg");		
 	        byte[] buffer = new byte[1024];
 	        int length = -1;
 	        while ((length = in.read(buffer)) != -1) {
@@ -177,6 +210,8 @@ public class ManageAuthorService extends HttpServlet {
 	        out.close();
 		}	
 
+
+		
         BookBean bbUp = new BookBean();
         bbUp.setTitle(request.getParameter("title"));
         bbUp.setAuthorId(author_Id);
@@ -186,6 +221,8 @@ public class ManageAuthorService extends HttpServlet {
         bbUp.setClassify(request.getParameter("classity"));
         bbUp.setSurface_Plot_Name(setSurfacePlotName);
 		
+
+        
         List<BookBean> bbs = new ArrayList<>();
         List<BookBean> cbbs = new ArrayList<>();
 		String pen_Name;
@@ -316,7 +353,9 @@ public class ManageAuthorService extends HttpServlet {
 		//交易區塊(開始)
 		ManageAuthorBookDAO mabd_tran = new ManageAuthorBookDAO();
 		try {
-			mabd_tran.cancelAutoCommit();
+			mabd_tran.cancelAutoCommit();		
+			mabd_tran.deleteCheckChapterAsAuthor(cbUp);
+			mabd_tran.deleteCheckVolumeAsAuthor(vbUp);
 			mabd_tran.insertVolumeAsAuthor(vbUp);
 			mabd_tran.insertChapterAsAuthor(cbUp);
 			mabd_tran.transactionCommit();
@@ -400,12 +439,12 @@ public class ManageAuthorService extends HttpServlet {
 		int    book_Id = Integer.valueOf(bookId);
 		
 		String setSurfacePlotName = request.getParameter("surface_plot_name");		
-		String defaultPicPath = "F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/edit_bookcover_resources/default.jpg";
+		String defaultPicPath = "D:/_JSP/workspace/Booksystem/src/main/webapp/edit_bookcover_resources/default.jpg";
 
 		if (request.getPart("edit_surface_plot").getSize() != 0) {
 			Part filePart1 = request.getPart("edit_surface_plot");
 	        InputStream in = filePart1.getInputStream();	
-	        OutputStream out = new FileOutputStream("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/edit_bookcover_resources/" + setSurfacePlotName +".jpg");		
+	        OutputStream out = new FileOutputStream("D:/_JSP/workspace/Booksystem/src/main/webapp/edit_bookcover_resources/" + setSurfacePlotName +".jpg");		
 	        byte[] buffer = new byte[1024];
 	        int length = -1;
 	        while ((length = in.read(buffer)) != -1) {
@@ -416,7 +455,7 @@ public class ManageAuthorService extends HttpServlet {
 		}else{
 			File file = new File(defaultPicPath);
 			InputStream in = new FileInputStream(file);
-			OutputStream out = new FileOutputStream("F:/_JSP/eclipse-workspace/Booksystem/src/main/webapp/edit_bookcover_resources/" + setSurfacePlotName +".jpg");		
+			OutputStream out = new FileOutputStream("D:/_JSP/workspace/Booksystem/src/main/webapp/edit_bookcover_resources/" + setSurfacePlotName +".jpg");		
 	        byte[] buffer = new byte[1024];
 	        int length = -1;
 	        while ((length = in.read(buffer)) != -1) {
@@ -439,6 +478,7 @@ public class ManageAuthorService extends HttpServlet {
 		String pen_Name;
 		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
 
+		mabd.deleteEditBookAsAuthor(edit_bbUp);
 		int result = mabd.alterBookAsAuthor(edit_bbUp);
 		bbs      = mabd.findBooksByAuthorId(author_Id);
 		cbbs      = mabd.findCheckBooksByAuthorId(author_Id);
@@ -607,6 +647,8 @@ public class ManageAuthorService extends HttpServlet {
         List<BookBean> cbbs = new ArrayList<>();
 		String pen_Name;
 		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
+		
+		mabd.deleteEditVolumeAsAuthor(edit_vb);
 		int result = mabd.alterVolumeAsAuthor(edit_vb);
 		bbs      = mabd.findBooksByAuthorId(author_Id);
 		cbbs      = mabd.findCheckBooksByAuthorId(author_Id);
@@ -630,16 +672,6 @@ public class ManageAuthorService extends HttpServlet {
 		response.sendRedirect(getServletContext().getContextPath()+"/manage_dao_test/manage_author_Index.jsp");
 		return;	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	private void processRequest_15(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
@@ -667,6 +699,7 @@ public class ManageAuthorService extends HttpServlet {
         List<BookBean> cbbs = new ArrayList<>();
 		String pen_Name;
 		ManageAuthorBookDAO mabd = new ManageAuthorBookDAO();
+		mabd.deleteEditChapterAsAuthor(edit_cb);
 		int result = mabd.alterChapterAsAuthor(edit_cb);
 		bbs      = mabd.findBooksByAuthorId(author_Id);
 		cbbs      = mabd.findCheckBooksByAuthorId(author_Id);
@@ -691,28 +724,7 @@ public class ManageAuthorService extends HttpServlet {
 		return;	
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	private void processRequest_09(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String authorId = request.getParameter("author_id"); 
