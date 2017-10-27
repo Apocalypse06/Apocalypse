@@ -123,7 +123,7 @@
 			<div style="position:absolute;top:${430*status.count-300}px;left:10px; width:750px;height:400px;border:3px solid purple;">
 				<div>
 					<br>BookID:${book.bookId}
-					<br><img src="/Booksystem//fakedata_resources/${book.surface_Plot_Name}.jpg" width="150px" height="300px">
+					<br><img src="/Apocalypse//fakedata_resources/${book.surface_Plot_Name}.jpg" width="150px" height="300px">
 				</div>
 				<div style="position:absolute;top:30px;left:200px;width:500px;height:300px;border:3px solid blue;">
 					<br>Title:${book.title}
