@@ -20,18 +20,12 @@
 <!--   	先exclude掉@Service，讓 applicationContext.xml inject後的service才有manage transaction的能力  -->
  	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />  
  </context:component-scan>
- 
-<!--  aspectj -->
+ <mvc:default-servlet-handler />
+
  	<mvc:resources mapping="/resources/css/**" location="/resources/css/" />
 	<mvc:resources mapping="/resources/js/**" location="/resources/js/" />
 	<mvc:resources mapping="/fakedata_resources/**" location="/fakedata_resources/" />
 	<mvc:annotation-driven />
-<!-- 	interceptros -->
-<!-- 	<mvc:interceptors> -->
-<!-- 		<mvc:interceptor> -->
-<!-- 			<mvc:mapping path="" /> -->
-<!-- 			<bean class="" /> -->
-<!-- 		</mvc:interceptor> -->
-<!-- 	</mvc:interceptors> -->
+
  
 </beans>
