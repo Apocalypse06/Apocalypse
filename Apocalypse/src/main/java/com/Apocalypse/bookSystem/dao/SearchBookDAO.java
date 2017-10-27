@@ -19,6 +19,7 @@ import com.Apocalypse.bookSystem.util.GlobalService;
 public class SearchBookDAO {
 	Connection conn;
 	DataSource ds = null;
+	
 	{
 		try {
 			Context ctx = new InitialContext();
@@ -57,7 +58,7 @@ public class SearchBookDAO {
 			bb.setPenName(rs.getString("a.pen_Name"));
 			bbs.add(bb);
 		}
-		
+		System.out.println(".................");
 		rs.close();
 		pstmt.close();
 		
