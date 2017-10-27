@@ -1,18 +1,17 @@
-<?xml version='1.0' encoding='utf-8'?> 
-<Context displayName="MemberStstem" docBase="MemberStstem" path="/MemberStstem" reloadable="true">
-  <!--                     MySQL                   -->
-  <Resource name="jdbc/MemberDB" type="javax.sql.DataSource"
-      username="java006@apocalypse" password="Sa123456"
-      driverClassName="com.mysql.jdbc.Driver"
-      url="jdbc:mysql://apocalypse.mysql.database.azure.com:3306/apocalypse?"
-      connectionProperties="useUnicode=yes;characterEncoding=utf8;"
-      maxActive="8"
-      maxIdle="4"
-      maxWait="5000"
-  />
-  
-  
-  
-  
-    
+<?xml version='1.0' encoding='utf-8'?>
+<Context displayName="MemberStstem" docBase="MemberStstem" path="/MemberStstem"
+	reloadable="true">
+	<!-- MySQL -->
+	<Resource name="jdbc/MemberDB" type="javax.sql.DataSource"
+		username="java006@apocalypse" 
+		password="Sa123456" 
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://apocalypse.mysql.database.azure.com:3306/apocalypse?"
+		connectionProperties="useUnicode=yes;characterEncoding=utf8;"
+		maxActive="8" maxIdle="4" maxWait="5000" />
+
+
+
+
+
 </Context>
