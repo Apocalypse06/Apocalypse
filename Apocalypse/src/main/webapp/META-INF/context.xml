@@ -6,7 +6,7 @@
 		username="java006@apocalypse" 
 		password="Sa123456" 
 		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://apocalypse.mysql.database.azure.com:3306/apocalypse?"
+		url="jdbc:mysql://apocalypse.mysql.database.azure.com:3306/apocalypse"
 		connectionProperties="useUnicode=yes;characterEncoding=utf8;"
 		maxActive="8" maxIdle="4" maxWait="5000" />
 
