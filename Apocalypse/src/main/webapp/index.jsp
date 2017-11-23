@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:if test="${empty LoginOK}"> 
-     <c:redirect url="/login/Login.jsp" />
-</c:if>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +8,25 @@
 	<title>Home</title>
 </head>
 <body>
-  <center>
-	<h1>尚未開發</h1>
-	<a href="<c:url value='/top.jsp' />">回到首頁</a>
-  </center>
+	<h1>套件功能測試主頁</h1>
+	<br>
+	<hr>
+	
+	<h5>作品頁測試</h5>
+		<a href="product_dao_test/product_Index.jsp">作品資料呼出功能測試主頁</a>
+	<br>		
+	<hr>
+		
+	<h5>搜尋頁測試</h5>
+		<a href="search_dao_test/search_Index.jsp">搜尋功能測試主頁</a>
+	<br>
+	<hr>
+	
+	<h5>管理頁測試</h5>
+	<a href="manage_dao_test/manage_author_Login.jsp">作家管理功能測試主頁</a>
+	<br>
+	<hr>
+
+	
 </body>
 </html>
