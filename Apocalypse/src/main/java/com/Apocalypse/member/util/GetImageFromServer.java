@@ -1,6 +1,9 @@
 package com.Apocalypse.member.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -76,7 +79,7 @@ public class GetImageFromServer extends HttpServlet {
 					is = getServletContext().getResourceAsStream(
 							"/images/default.png");
 				} else {
-					System.out.println(2 + path+fileName);
+					//System.out.println(2 + path+fileName);
 					is = getServletContext().getResourceAsStream(
 							path+fileName);
 				}
@@ -129,6 +132,7 @@ public class GetImageFromServer extends HttpServlet {
 				os.close();
 			}
 		}
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -32,6 +32,19 @@ public class ChangePswdServlet extends HttpServlet {
 		MemberBean mb=null;
 		String regex = null;		
 		boolean flag = true;
+		Long nowtime= System.currentTimeMillis();
+		Long time = Long.parseLong(request.getParameter("time"));
+
+		if((nowtime-time)>(1000*60*60)) {
+			
+			request.setAttribute("overtime", (nowtime-time));
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/top.jsp");
+			rd.forward(request, response);
+			
+		   System.out.println(request.getAttribute("overtime"));
+			return;
+		}else {
 		
 		if (mPswd == null || mPswd.trim().length() == 0) {
 			errorMessage.put("mPswd","密碼欄必須輸入");
@@ -41,6 +54,7 @@ public class ChangePswdServlet extends HttpServlet {
 		    if(!flag){
 		    	errorMessage.put("mPswd","密碼欄位輸入的格式不符");
 		       }
+		   // mPswd=Md5.md5(mPswd);
 		}
 		
 		//如果填寫資料格式有錯或有格子未填寫,交棒給/change/ChangeMemberForm.jsp	
@@ -71,7 +85,7 @@ public class ChangePswdServlet extends HttpServlet {
 			return;
 		}
 		
-		
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

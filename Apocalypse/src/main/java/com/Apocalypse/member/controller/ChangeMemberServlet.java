@@ -36,6 +36,7 @@ public class ChangeMemberServlet extends HttpServlet{
 		Gson gson = new Gson();
 		String regex = null;		
 		boolean flag = true;
+		
 			
 		//檢查Email欄位格式
 		String mEmail = request.getParameter("mEmail");
@@ -71,6 +72,7 @@ public class ChangeMemberServlet extends HttpServlet{
 		    if(!flag){
 		    	errorMessage.put("mPswd","密碼欄位輸入的格式不符");
 		       }
+		   // mPswd=Md5.md5(mPswd);
 		}
 		
 		//檢查生日欄位格式

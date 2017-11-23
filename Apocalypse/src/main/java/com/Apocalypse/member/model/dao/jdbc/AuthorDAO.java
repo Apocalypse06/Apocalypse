@@ -1,4 +1,4 @@
-package com.Apocalypse.author.model.dao;
+package com.Apocalypse.member.model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,15 +10,17 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.Apocalypse.author.bean.AuthorBean;
+import com.Apocalypse.member.bean.AuthorBean;
 
-public class AuthorDAO implements IAuthorDAO {
+public class AuthorDAO {
 
 	DataSource ds = null;
-	public AuthorDAO() {
+	
+	public AuthorDAO()throws SQLException {
 		try {
 			Context context = new InitialContext();
 			ds = (DataSource) context.lookup("java:comp/env/jdbc/MemberDB");
+			
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -28,10 +30,6 @@ public class AuthorDAO implements IAuthorDAO {
 		private static final String SELECT_By_Member_Id = "Select author_Id, pen_Name, member_Id, bank_Account "
 				                                    + "  from author where member_Id = ?";
 
-		/* （非 Javadoc）
-		 * @see com.Apocalypse.member.model.dao.jdbc.IAuthorDAO#Select_By_Member_Id(java.lang.String)
-		 */
-		@Override
 		public AuthorBean Select_By_Member_Id (String member_Id) throws SQLException  {
 			AuthorBean result = null;
 			
@@ -61,10 +59,6 @@ public class AuthorDAO implements IAuthorDAO {
 				private static final String SELECT_By_Pen_Name = "Select author_Id, pen_Name, member_Id, bank_Account "
 						                                    + "  from author where member_Id = ?";
 
-				/* （非 Javadoc）
-				 * @see com.Apocalypse.member.model.dao.jdbc.IAuthorDAO#Select_By_Pen_Name(java.lang.String)
-				 */
-				@Override
 				public AuthorBean Select_By_Pen_Name (String pen_Name) throws SQLException  {
 					AuthorBean result = null;
 					
@@ -92,10 +86,6 @@ public class AuthorDAO implements IAuthorDAO {
 		
 	//新增一筆作家資料(註冊會員)
 		private static final String INSERT = "Insert into author (pen_Name, member_Id, bank_Account) values (?, ?, ?)"; 
-		/* （非 Javadoc）
-		 * @see com.Apocalypse.member.model.dao.jdbc.IAuthorDAO#insertAuthor(com.Apocalypse.member.bean.AuthorBean)
-		 */
-		@Override
 		public AuthorBean insertAuthor(AuthorBean bean) throws SQLException {
 			AuthorBean result = null;
 			try(

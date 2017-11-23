@@ -2,17 +2,17 @@ package com.Apocalypse.member.model.service;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 import com.Apocalypse.member.bean.MemberBean;
 import com.Apocalypse.member.model.dao.jdbc.MemberDAO;
 
 
-@Service
+
 public class MemberService {
-	
 	public MemberBean checkIDPassword(String account, String pswd)throws SQLException {
 		
 		MemberDAO dao = new MemberDAO();
@@ -25,6 +25,27 @@ public class MemberService {
         // 傳回null物件
 		return null;
 	}
+	public MemberBean getickets(String account)throws SQLException, ParseException {
+		
+		MemberDAO dao = new MemberDAO();
+		MemberBean mb = dao.select(account);
+		System.out.println(mb.getLastLogin().getTime());
+		//System.out.println(System.currentTimeMillis());
+		int month= (new Date(System.currentTimeMillis())).getMonth();
+		System.out.println(month+1);
+		int year= (new Date(System.currentTimeMillis())).getYear();
+		System.out.println(year+1900);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	       
+		Date dt1 = sdf.parse( (1900+year)+"/"+(month+2)+"/1 00:00:00" );
+	       if(dt1.getTime()>mb.getLastLogin().getTime()) {
+	    	   mb = dao.changetickets(account);
+	    	   System.out.println(6666);
+	       }
+	       System.out.println(777777);
+		return mb;
+	}
+	
 	
 	public MemberBean changeLastLogin(String account, java.sql.Timestamp lastLogin, String lastLogin_Ip)throws SQLException {
 		
@@ -41,7 +62,13 @@ public class MemberService {
           	
 		return mb;
 	}
-	
+	public MemberBean select_by_id(String member_Id)throws SQLException {
+		
+		MemberDAO dao = new MemberDAO();
+		MemberBean mb = dao.select_by_id(member_Id);
+          	
+		return mb;
+	}
 	public MemberBean changerole_id(String member_Id,int role_id)throws SQLException {
 		
 		MemberDAO dao = new MemberDAO();

@@ -32,6 +32,17 @@ public class MemberBean implements Serializable{
 		super();
 	}
  
+	@Override
+	public String toString() {
+		return "MemberBean [member_Id=" + member_Id + ", account=" + account + ", pswd=" + pswd + ", nick_Name="
+				+ nick_Name + ", birthday=" + birthday + ", cellphone=" + cellphone + ", email=" + email + ", gender="
+				+ gender + ", picture_Name=" + picture_Name + ", points=" + points + ", tickets=" + tickets
+				+ ", role_id=" + role_id + ", creditCardNo=" + creditCardNo + ", reg_date=" + reg_date + ", lastLogin="
+				+ lastLogin + ", lastLogin_Ip=" + lastLogin_Ip + "]";
+	}
+
+
+
 
 
 	public MemberBean(String member_Id, String account, String pswd, String nick_Name, Date birthday, String cellphone,

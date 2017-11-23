@@ -2,7 +2,6 @@ package com.Apocalypse.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.Apocalypse.author.bean.AuthorBean;
-import com.Apocalypse.author.model.service.AuthorService;
+import com.Apocalypse.member.bean.AuthorBean;
 import com.Apocalypse.member.bean.MemberBean;
+import com.Apocalypse.member.model.service.AuthorService;
 import com.Apocalypse.member.model.service.MemberService;
 import com.google.gson.Gson;
 
@@ -38,6 +37,7 @@ public class LoginServlet extends HttpServlet {
 		String account = request.getParameter("account");
 		String pswd = request.getParameter("pswd");
 		java.sql.Timestamp lastLogin= new java.sql.Timestamp(System.currentTimeMillis());
+		
 		String lastLogin_Ip=request.getRemoteAddr();
 		MemberService ms = new MemberService();
 		MemberBean mb=null;
@@ -46,15 +46,25 @@ public class LoginServlet extends HttpServlet {
 		
 		List<Integer> list = null;
 		String role_Name= null;
-				
+			
+		
+		
+		
+		
+		
+		
 		if (account == null || account.trim().length() == 0) {
 			errorMsgMap.put("AccountEmptyError", "帳號欄必須輸入");
 		}
 		
 		if (pswd == null || pswd.trim().length() == 0) {
 			errorMsgMap.put("PswdEmptyError", "密碼欄必須輸入");
+		}else {
+			//pswd=Md5.md5(pswd);
 		}
 		
+		 
+		 
 		// 如果輸入資料有錯誤，送回前端，請使用者修正
 				if (!errorMsgMap.isEmpty()) {
 					out.println(gson.toJson(errorMsgMap));
@@ -65,9 +75,13 @@ public class LoginServlet extends HttpServlet {
 		
 		try {
 				mb = ms.checkIDPassword(account,pswd);
+				
 				if (mb == null) {
 					errorMsgMap.put("LoginError", "該帳號不存在或密碼錯誤");
 				}else {
+					 mb=ms.getickets(account);
+					System.out.println("---------");
+					
 					 mb = ms.changeLastLogin(account,lastLogin,lastLogin_Ip);
 					 session.setAttribute("LoginOK", mb);
 					 list = ms.select_permission(mb.getRole_id());
@@ -78,7 +92,7 @@ public class LoginServlet extends HttpServlet {
 					 session.setAttribute("LoginOK_Author", ab);
 					 errorMsgMap.put("Success", "登入成功");
 				  }
-		}catch(SQLException e){
+		}catch(Exception e){
 			errorMsgMap.put("LoginError", "執行登入時,連線有問題");
 			System.out.println("執行登入時,連線有問題");
 		}

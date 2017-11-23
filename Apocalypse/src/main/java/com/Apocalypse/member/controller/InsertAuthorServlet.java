@@ -1,4 +1,4 @@
-package com.Apocalypse.author.controller;
+package com.Apocalypse.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.Apocalypse.author.bean.AuthorBean;
-import com.Apocalypse.author.model.service.AuthorService;
+import com.Apocalypse.member.bean.AuthorBean;
 import com.Apocalypse.member.bean.MemberBean;
+import com.Apocalypse.member.model.service.AuthorService;
 import com.Apocalypse.member.model.service.MemberService;
 import com.google.gson.Gson;
 

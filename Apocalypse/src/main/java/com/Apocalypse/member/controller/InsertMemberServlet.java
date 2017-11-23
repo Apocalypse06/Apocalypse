@@ -33,7 +33,7 @@ public class InsertMemberServlet extends HttpServlet {
 		Map<String, String> errorMessage = new HashMap<>();
 		HttpSession session = request.getSession();
 		request.setAttribute("ErrorMsg", errorMessage);
-        String member_Id= UUID.randomUUID().toString().replace("-", StringUtils.EMPTY).trim();
+		String member_Id= UUID.randomUUID().toString().replace("-", StringUtils.EMPTY).trim();
         java.sql.Date reg_date=new java.sql.Date(System.currentTimeMillis());
                
 		// 設定輸入資料的編碼
@@ -41,8 +41,25 @@ public class InsertMemberServlet extends HttpServlet {
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
+		
 		String regex = null;		
 		boolean flag = true;
+		String email= request.getParameter("email");
+		System.out.println(email);
+		
+		if(email != null) {
+			System.out.println(1);
+			MemberBean mb= (MemberBean)session.getAttribute("LoginOK");
+			System.out.println(mb);
+			JavaMailMain mail=new JavaMailMain();
+			mail.sendmail_Changerole_id(mb.getMember_Id(),mb.getAccount());
+			System.out.println(2);
+			out.println(gson.toJson(1));
+			out.close();
+			return;
+		
+		}
+		
 		
 		//檢查帳號欄位格式
 		String mAccount = request.getParameter("mAccount");
@@ -79,6 +96,7 @@ public class InsertMemberServlet extends HttpServlet {
 		    if(!flag){
 		    	errorMessage.put("mPswd","密碼欄位輸入的格式不符");
 		       }
+		   // mPswd=Md5.md5(mPswd);
 		}
 		
 		//檢查生日欄位格式

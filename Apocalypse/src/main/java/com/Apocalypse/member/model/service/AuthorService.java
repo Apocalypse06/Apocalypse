@@ -1,15 +1,14 @@
-package com.Apocalypse.author.model.service;
+package com.Apocalypse.member.model.service;
 
 import java.sql.SQLException;
 
-import com.Apocalypse.author.bean.AuthorBean;
-import com.Apocalypse.author.model.dao.AuthorDAO;
-import com.Apocalypse.author.model.dao.IAuthorDAO;
+import com.Apocalypse.member.bean.AuthorBean;
+import com.Apocalypse.member.model.dao.jdbc.AuthorDAO;
 
 public class AuthorService {
 public int check_Pen_Name(String pen_Name)throws SQLException {
 		
-	    IAuthorDAO dao = new AuthorDAO();
+	    AuthorDAO dao = new AuthorDAO();
 		AuthorBean ab = dao.Select_By_Pen_Name(pen_Name);
         //ab不為null則表示此筆名已存在
         if ( ab != null ) {
@@ -21,7 +20,7 @@ public int check_Pen_Name(String pen_Name)throws SQLException {
 	}
 public AuthorBean Select_By_Member_Id(String member_Id)throws SQLException {
 	
-    IAuthorDAO dao = new AuthorDAO();
+    AuthorDAO dao = new AuthorDAO();
 	AuthorBean ab = dao.Select_By_Member_Id(member_Id);
     //ab不為null則表示此筆名已存在
     
@@ -29,7 +28,7 @@ public AuthorBean Select_By_Member_Id(String member_Id)throws SQLException {
 }
 public AuthorBean insertMember(AuthorBean AB)throws SQLException {
 	
-	IAuthorDAO dao = new AuthorDAO();
+	AuthorDAO dao = new AuthorDAO();
 	AuthorBean ab = dao.insertAuthor(AB);
       	
 	return ab;

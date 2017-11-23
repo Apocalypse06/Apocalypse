@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.Apocalypse.init.GlobalService;
 import com.Apocalypse.member.bean.MemberBean;
 import com.Apocalypse.member.model.service.MemberService;
-import com.Apocalypse.member.util.GlobalService;
 
 
 @WebServlet("/controler/ChangePictureServlet")

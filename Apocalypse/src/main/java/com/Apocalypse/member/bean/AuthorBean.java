@@ -1,4 +1,4 @@
-package com.Apocalypse.author.bean;
+package com.Apocalypse.member.bean;
 
 import java.io.Serializable;
 

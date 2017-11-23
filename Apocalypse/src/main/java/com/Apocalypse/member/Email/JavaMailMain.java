@@ -25,7 +25,7 @@ public class JavaMailMain {
 					  "<h1>謝謝您加入會員</h1>" +
 					  "<h2>請按以下的來連結來成為正式會員</h2>" +
 				      "<a href='http://localhost:8080/MemberSystem/controler/EmailLogInServlet?member_Id="+
-				      member_Id+"&role_id=2'>IRead</a><br>" +
+				      member_Id+"&time="+System.currentTimeMillis()+"&role_id=2'>IRead</a><br>" +
 					  "<br><br><font color='blue'> 再次感謝, </font><br>工作小組敬上";
 		  
 		  List<String> to = Arrays.asList(
@@ -46,9 +46,9 @@ public class JavaMailMain {
 						  "<h1>會員您好</h1>" +
 						  "<h2>請按以下的來連結來更改密碼</h2>" +
 					      "<a href='http://localhost:8080/MemberSystem/ForgetPswd/ChangePswd.jsp?member_Id="+
-					      member_Id+"'>IRead</a><br>" +
+					      member_Id+"&time="+System.currentTimeMillis()+"'>IRead</a><br>" +
 						  "<br><br><font color='blue'> 再次感謝, </font><br>工作小組敬上";
-			  
+			  System.out.println(System.currentTimeMillis());
 			  List<String> to = Arrays.asList(
 					   new String[]{email});
 			  		  
