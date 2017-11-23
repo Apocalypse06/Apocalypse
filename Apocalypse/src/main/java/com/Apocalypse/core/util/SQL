@@ -1,0 +1,18 @@
+CREATE TABLE product (
+    product_id INT NOT NULL AUTO_INCREMENT,
+    product_name VARCHAR(200) NOT NULL,
+    price INT NOT NULL,
+    product_desc VARCHAR(200),
+    PRIMARY KEY (product_id)
+)  ENGINE=INNODB CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+CREATE TABLE orders (
+    orders_id INT NOT NULL AUTO_INCREMENT,
+    member_id INT NOT NULL,
+    trade_date TIMESTAMP,
+    item_name VARCHAR(200),
+    quantity INT,
+    total_amount INT,
+    PRIMARY KEY (orders_id),
+    FOREIGN KEY (member_Id)
+        REFERENCES member (member_Id)
+)  ENGINE=INNODB CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
